@@ -3,7 +3,7 @@
 
 Game::Game(Window& win) :
 	ws(win),
-	level(ws, Vector2(-0.2f, -0.2f), Vector2(0.4f, 0.4f), 10, 10)
+	level(ws, Vector2(-0.7f, -0.7f), Vector2(1.0f, 1.0f), 10, 10)
 {
 	tankHandler.add(1, level, ws);
 

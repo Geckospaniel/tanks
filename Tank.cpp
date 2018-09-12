@@ -19,6 +19,11 @@ Tank::Tank(WorldSpace& ws, Vector2 pos, Vector2 sz) : ws(ws)
 void Tank::update(Level& level)
 {
 	rotation+=2.5f;
+
+	float tRot = toRadian(rotation);
+	Vector2 direction(cos(tRot), sin(tRot));
+
+	position+=(direction * 0.01f);
 }
 
 void Tank::draw()
