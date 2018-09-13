@@ -7,6 +7,14 @@ Level::Level(WorldSpace& ws, Vector2 pos, Vector2 sz, const size_t tx, const siz
 	size = sz;
 
 	data.resize(tilesX, std::vector <char> (tilesY, 0));
+
+	for(size_t x = 0; x < tilesX; x+=3)
+	{
+		for(size_t y = 1; y < tilesY / 2; y++)
+		{
+			data[x][y] = 1;
+		}
+	}
 }
 
 void Level::draw()
@@ -51,6 +59,30 @@ Vector2& Level::getPosition()
 Vector2& Level::getSize()
 {
 	return size;
+}
+
+bool Level::isInsideBorders(Vector2 ip)
+{
+	return ip > position && ip < position + size;
+}
+
+bool Level::intersects(Vector2 ip)
+{
+	bool hit = false;
+
+	if(isInsideBorders(ip))
+	{
+		ip-=position;
+
+		size_t x = ip[X] / tileW();
+		size_t y = ip[Y] / tileH();
+
+		hit = data[x][y];
+	}
+	else
+		hit = true;
+
+	return hit;
 }
 
 float Level::tileW()

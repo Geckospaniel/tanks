@@ -34,7 +34,7 @@ void TankHandler::add(size_t amount, Level& level, WorldSpace& ws)
 
 		SDL_Log("Created at %.2f %.2f!", position[X], position[Y]);
 
-		tanks.push_back( Tank(ws, position, radius) );
+		tanks.push_back( Tank(ws, position, radius, i) );
 	}
 }
 
@@ -44,8 +44,11 @@ void TankHandler::update(Level& level)
 		tanks[i].update(level);
 }
 
-void TankHandler::draw()
+void TankHandler::draw(Level& level)
 {
 	for(size_t i = 0; i < tanks.size(); i++)
+	{
 		tanks[i].draw();
+		tanks[i].drawWeapon(level);
+	}
 }

@@ -16,7 +16,7 @@ public:
 
 	void input(SDL_Event evnt);
 	void update(Level& level);
-	void draw();
+	void draw(Level& level);
 
 private:
 	std::vector <Tank> tanks;

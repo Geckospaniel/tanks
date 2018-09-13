@@ -16,6 +16,9 @@ public:
 	Vector2& getPosition();
 	Vector2& getSize();
 
+	bool isInsideBorders(Vector2 ip);
+	bool intersects(Vector2 ip);
+
 	float tileW();
 	float tileH();
 

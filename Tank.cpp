@@ -8,22 +8,38 @@ float toRadian(float degrees)
 	return degrees * 0.0174532925;
 }
 
-Tank::Tank(WorldSpace& ws, Vector2 pos, Vector2 sz) : ws(ws)
+Tank::Tank(WorldSpace& ws, Vector2 pos, Vector2 sz, size_t id) : ws(ws)
 {
 	position = pos;
 	radius = sz;
 
+	this->id = id;
 	rotation = 0.0f;
+
+	weapon = makeWeapon(WEAPON_BASIC);
+	SDL_Log("TNK : %p", &position);
 }
 
 void Tank::update(Level& level)
 {
-	rotation+=2.5f;
+	rotation+=1.0f;
+
+	Vector2 last = position;
 
 	float tRot = toRadian(rotation);
 	Vector2 direction(cos(tRot), sin(tRot));
 
 	position+=(direction * 0.01f);
+
+	if(level.intersects(position))
+	{
+		position = last;
+	}
+}
+
+void Tank::drawWeapon(Level& level)
+{
+	weapon->drawPath(ws, level, position, rotation);
 }
 
 void Tank::draw()
