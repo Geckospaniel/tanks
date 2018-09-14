@@ -10,13 +10,17 @@
 class Weapon
 {
 public:
-	Weapon();
+	Weapon(WorldSpace& ws);
 
 	void addImmune(size_t id);
-	void drawPath(WorldSpace& ws, Level& level, Vector2& position, float& tankRotation);
+	void drawPath(WorldSpace& ws, Level& level, Vector2& position, float tankRotation);
+
+	void update(Vector2& tankPosition, float tankRotation);
 
 protected:
 	std::vector <size_t> immuneTanks;
+
+	WorldSpace& ws;
 };
 
 enum WeaponType

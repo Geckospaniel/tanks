@@ -13,10 +13,8 @@ void Weapon::addImmune(size_t id)
 	immuneTanks.push_back(id);
 }
 
-void Weapon::drawPath(WorldSpace& ws, Level& level, Vector2& position, float& tankRotation)
+void Weapon::drawPath(WorldSpace& ws, Level& level, Vector2& position, float tankRotation)
 {
-	SDL_Log("%.2f : %.2f", position[X], position[Y]);
-
 	auto getDirection = [&](float rot) -> Vector2
 	{
 		float tRot = toRadian(rot);
@@ -28,14 +26,60 @@ void Weapon::drawPath(WorldSpace& ws, Level& level, Vector2& position, float& ta
 	Vector2 offset = position;
 	Vector2 rayPosition = offset;
 
-	for(float rayI = 0; rayI < 0.4f; rayI+=0.001f)
+	auto update = [&](float r) -> void
 	{
+		tankRotation = r + (r - tankRotation);
+		direction = getDirection(tankRotation);
+		
+		offset = rayPosition;
+	};
+
+	float rLength = 0.8f;
+
+	for(float rayI = 0; rayI < rLength; rayI+=0.001f)
+	{
+		Vector2 last = offset + (direction * (rayI - 0.001f));
 		rayPosition = offset + (direction * rayI);
 
-		if(level.intersects(rayPosition))
+		bool out = !level.isInsideBorders(rayPosition);
+
+		if(out)
 		{
-			SDL_Log("[%.2f] Hit", rayI);
+			if(!level.insideBordersX(rayPosition[X]))
+				update(90);
+			if(!level.insideBordersY(rayPosition[Y]))
+				update(180);
+
+			rLength = rLength - rayI;
+			rayI = 0.0f;
 		}
+		else if(level.intersects(rayPosition))
+		{
+			Vector2 lastIndex = last - level.getPosition();
+			Vector2 index = rayPosition - level.getPosition();
+
+			size_t x = index[X] / level.tileW();
+			size_t y = index[Y] / level.tileH();
+
+			size_t lx = lastIndex[X] / level.tileW();
+			size_t ly = lastIndex[Y] / level.tileH();
+
+			SDL_Log("%lu %lu : %lu %lu", x, y, lx, ly);
+			if(lx != x)
+				update(90);
+			if(ly != y)
+				update(180);
+
+			rLength = rLength - rayI;
+			rayI = 0.0f;
+		}
+
+		if(out)
+			Render::setColor(255, 0, 0);
+		else
+			Render::setColor(0, 255, 0);
+		rayPosition = ws.toScreen(rayPosition);
+		Render::dot(rayPosition[X], rayPosition[Y]);
 	}
 }
 

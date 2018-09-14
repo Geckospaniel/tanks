@@ -44,7 +44,7 @@ void Game::update()
 void Game::draw()
 {
 	if(gamePaused)ws.draw();
+	level.draw();
 	tankHandler.draw(level);
 
-	level.draw();
 }

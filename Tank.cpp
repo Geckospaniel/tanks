@@ -10,7 +10,8 @@ float toRadian(float degrees)
 
 Tank::Tank(WorldSpace& ws, Vector2 pos, Vector2 sz, size_t id) : ws(ws)
 {
-	position = pos;
+//	position = pos;
+	position = Vector2(0.0f, 0.0f);
 	radius = sz;
 
 	this->id = id;
@@ -22,14 +23,14 @@ Tank::Tank(WorldSpace& ws, Vector2 pos, Vector2 sz, size_t id) : ws(ws)
 
 void Tank::update(Level& level)
 {
-	rotation+=1.0f;
+	rotation+=0.5f;
 
 	Vector2 last = position;
 
 	float tRot = toRadian(rotation);
 	Vector2 direction(cos(tRot), sin(tRot));
 
-	position+=(direction * 0.01f);
+//	position+=(direction * 0.01f);
 
 	if(level.intersects(position))
 	{

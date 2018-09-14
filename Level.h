@@ -17,12 +17,15 @@ public:
 	Vector2& getSize();
 
 	bool isInsideBorders(Vector2 ip);
+	bool insideBordersX(float ip);
+	bool insideBordersY(float ip);
+
 	bool intersects(Vector2 ip);
 
 	float tileW();
 	float tileH();
 
-	char& operator()(size_t x, size_t y);
+	char operator()(size_t x, size_t y);
 	size_t getTileAmount(int dimension);
 
 private:
