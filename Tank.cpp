@@ -2,6 +2,7 @@
 #include "Renderer.h"
 
 #include <math.h>
+#include <random>
 
 float toRadian(float degrees)
 {
@@ -10,27 +11,32 @@ float toRadian(float degrees)
 
 Tank::Tank(WorldSpace& ws, Vector2 pos, Vector2 sz, size_t id) : ws(ws)
 {
-//	position = pos;
+	position = pos;
 	position = Vector2(0.0f, 0.0f);
 	radius = sz;
 
 	this->id = id;
 	rotation = 0.0f;
 
-	weapon = makeWeapon(WEAPON_BASIC);
+	weapon = makeWeapon(WEAPON_BASIC, ws);
 	SDL_Log("TNK : %p", &position);
 }
 
 void Tank::update(Level& level)
 {
-	rotation+=0.5f;
+	static std::random_device rd;
+	static std::mt19937 gen(rd());
+
+	static std::uniform_int_distribution <int> dis(-10, 10);
+
+	rotation+=dis(gen);
 
 	Vector2 last = position;
 
 	float tRot = toRadian(rotation);
 	Vector2 direction(cos(tRot), sin(tRot));
 
-//	position+=(direction * 0.01f);
+	position+=(direction * 0.001f);
 
 	if(level.intersects(position))
 	{
@@ -40,7 +46,7 @@ void Tank::update(Level& level)
 
 void Tank::drawWeapon(Level& level)
 {
-	weapon->drawPath(ws, level, position, rotation);
+	weapon->drawPath(level, position, rotation);
 }
 
 void Tank::draw()

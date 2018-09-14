@@ -4,7 +4,7 @@
 
 extern float toRadian(float degrees);
 
-Weapon::Weapon() 
+Weapon::Weapon(WorldSpace& ws) : ws(ws) 
 {
 }
 
@@ -13,7 +13,7 @@ void Weapon::addImmune(size_t id)
 	immuneTanks.push_back(id);
 }
 
-void Weapon::drawPath(WorldSpace& ws, Level& level, Vector2& position, float tankRotation)
+void Weapon::drawPath(Level& level, Vector2& position, float tankRotation)
 {
 	auto getDirection = [&](float rot) -> Vector2
 	{
@@ -83,13 +83,13 @@ void Weapon::drawPath(WorldSpace& ws, Level& level, Vector2& position, float tan
 	}
 }
 
-Weapon* makeWeapon(WeaponType type)
+Weapon* makeWeapon(WeaponType type, WorldSpace& ws)
 {
 	Weapon* weapon;
 
 	switch(type)
 	{
-		case WEAPON_BASIC: weapon = new WeaponBasic(); break;
+		case WEAPON_BASIC: weapon = new WeaponBasic(ws); break;
 	}
 
 	return weapon;

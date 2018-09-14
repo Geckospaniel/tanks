@@ -3,11 +3,12 @@
 
 #include "Weapon.h"
 #include "Vector2.h"
+#include "WorldSpace.h"
 
 class WeaponBasic : public Weapon
 {
 public:
-	WeaponBasic();
+	WeaponBasic(WorldSpace& ws);
 
 private:
 	float speed;

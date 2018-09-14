@@ -25,7 +25,7 @@ public:
 	float tileW();
 	float tileH();
 
-	char operator()(size_t x, size_t y);
+	char& operator()(size_t x, size_t y);
 	size_t getTileAmount(int dimension);
 
 private:

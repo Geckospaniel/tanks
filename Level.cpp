@@ -7,11 +7,6 @@ Level::Level(WorldSpace& ws, Vector2 pos, Vector2 sz, const size_t tx, const siz
 	size = sz;
 
 	data.resize(tilesX, std::vector <char> (tilesY, 0));
-
-	data[0][0] = 1;
-	data[1][1] = 1;
-	data[2][2] = 1;
-	data[3][3] = 1;
 }
 
 void Level::draw()
@@ -102,11 +97,8 @@ float Level::tileH()
 	return size[H] / tilesY;
 }
 
-char Level::operator()(size_t x, size_t y)
+char& Level::operator()(size_t x, size_t y)
 {
-	if(x < 0 || x >= tilesX || y < 0 || y >= tilesY)
-		return 1;
-
 	return data[x][y];
 }
 

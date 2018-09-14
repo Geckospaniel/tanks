@@ -13,7 +13,7 @@ public:
 	Weapon(WorldSpace& ws);
 
 	void addImmune(size_t id);
-	void drawPath(WorldSpace& ws, Level& level, Vector2& position, float tankRotation);
+	void drawPath(Level& level, Vector2& position, float tankRotation);
 
 	void update(Vector2& tankPosition, float tankRotation);
 
@@ -28,6 +28,6 @@ enum WeaponType
 	WEAPON_BASIC
 };
 
-Weapon* makeWeapon(WeaponType type);
+Weapon* makeWeapon(WeaponType type, WorldSpace& ws);
 
 #endif

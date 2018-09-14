@@ -2,6 +2,6 @@
 
 #include <SDL2/SDL_log.h>
 
-WeaponBasic::WeaponBasic() : Weapon()
+WeaponBasic::WeaponBasic(WorldSpace& ws) : Weapon(ws)
 {
 }
