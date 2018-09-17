@@ -6,7 +6,9 @@ Level::Level(WorldSpace& ws, Vector2 pos, Vector2 sz, const size_t tx, const siz
 	position = pos;
 	size = sz;
 
-	data.resize(tilesX, std::vector <char> (tilesY, 0));
+	data.resize(tilesX, std::vector <char> (tilesY, 1));
+
+	data[40][40] = 0;
 }
 
 void Level::draw()

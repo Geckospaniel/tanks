@@ -72,6 +72,8 @@ void Weapon::drawPath(Level& level, Vector2& position, float tankRotation)
 
 			rLength = rLength - rayI;
 			rayI = 0.0f;
+
+			level(x, y) = 0;
 		}
 
 		if(out)
