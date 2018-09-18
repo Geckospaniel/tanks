@@ -34,7 +34,7 @@ void Weapon::drawPath(Level& level, Vector2& position, float tankRotation)
 		offset = rayPosition;
 	};
 
-	float rLength = 0.8f;
+	float rLength = maxRange;
 
 	for(float rayI = 0; rayI < rLength; rayI+=0.001f)
 	{
@@ -64,7 +64,7 @@ void Weapon::drawPath(Level& level, Vector2& position, float tankRotation)
 			size_t lx = lastIndex[X] / level.tileW();
 			size_t ly = lastIndex[Y] / level.tileH();
 
-			SDL_Log("%lu %lu : %lu %lu", x, y, lx, ly);
+		//	SDL_Log("%lu %lu : %lu %lu", x, y, lx, ly);
 			if(lx != x)
 				update(90);
 			if(ly != y)
@@ -73,7 +73,7 @@ void Weapon::drawPath(Level& level, Vector2& position, float tankRotation)
 			rLength = rLength - rayI;
 			rayI = 0.0f;
 
-			level(x, y) = 0;
+		//	level(x, y) = 0;
 		}
 
 		if(out)
@@ -83,6 +83,11 @@ void Weapon::drawPath(Level& level, Vector2& position, float tankRotation)
 		rayPosition = ws.toScreen(rayPosition);
 		Render::dot(rayPosition[X], rayPosition[Y]);
 	}
+}
+
+bool Weapon::isFired()
+{
+	return fired;
 }
 
 Weapon* makeWeapon(WeaponType type, WorldSpace& ws)

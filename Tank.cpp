@@ -36,16 +36,19 @@ void Tank::update(Level& level)
 	float tRot = toRadian(rotation);
 	Vector2 direction(cos(tRot), sin(tRot));
 
-	position+=(direction * 0.001f);
+	//position+=(direction * 0.001f);
 
 	if(level.intersects(position))
 	{
 		position = last;
 	}
+
+	weapon->update(level, position, rotation);
 }
 
 void Tank::drawWeapon(Level& level)
 {
+	weapon->draw();
 	weapon->drawPath(level, position, rotation);
 }
 

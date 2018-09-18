@@ -1,14 +1,30 @@
 #include "Level.h"
 #include "Renderer.h"
 
+#include <random>
+
 Level::Level(WorldSpace& ws, Vector2 pos, Vector2 sz, const size_t tx, const size_t ty) : ws(ws), tilesX(tx), tilesY(ty)
 {
 	position = pos;
 	size = sz;
 
-	data.resize(tilesX, std::vector <char> (tilesY, 1));
+	data.resize(tilesX, std::vector <char> (tilesY, 0));
 
-	data[40][40] = 0;
+	std::random_device rd;
+	std::mt19937 gen(rd());
+
+	std::uniform_int_distribution <size_t> randX(0, tilesX - 1);
+	std::uniform_int_distribution <size_t> randY(0, tilesY - 1);
+
+	for(int i = 0; i < 100000; i++)
+	{
+		size_t x = randX(gen);
+		size_t y = randY(gen);
+
+		data[x][y] = 1;
+	}
+
+	data[50][50] = 0;
 }
 
 void Level::draw()
@@ -99,8 +115,16 @@ float Level::tileH()
 	return size[H] / tilesY;
 }
 
-char& Level::operator()(size_t x, size_t y)
+char& Level::operator()(size_t& x, size_t& y)
 {
+	return data[x][y];
+}
+
+char Level::operator()(size_t&& x, size_t&& y)
+{
+	if((x < 0 || x >= tilesX) || (y < 0 || y >= tilesY))
+		return 1;
+
 	return data[x][y];
 }
 

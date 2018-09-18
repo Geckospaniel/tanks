@@ -3,9 +3,9 @@
 
 Game::Game(Window& win) :
 	ws(win),
-	level(ws, Vector2(-0.7f, -0.7f), Vector2(1.4f, 1.4f), 500, 500)
+	level(ws, Vector2(-1.0f, -1.0f), Vector2(2.0f, 2.0f), 100, 100)
 {
-	tankHandler.add(4, level, ws);
+	tankHandler.add(5000, level, ws);
 
 	gameRunning = true;
 	gamePaused = false;
