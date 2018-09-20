@@ -1,16 +1,12 @@
 #include "Weapon.h"
 #include "WeaponBasic.h"
+#include "WeaponSpread.h"
 #include "Renderer.h"
 
 extern float toRadian(float degrees);
 
 Weapon::Weapon(WorldSpace& ws) : ws(ws) 
 {
-}
-
-void Weapon::addImmune(size_t id)
-{
-	immuneTanks.push_back(id);
 }
 
 void Weapon::drawPath(Level& level, Vector2& position, float tankRotation)
@@ -97,6 +93,7 @@ Weapon* makeWeapon(WeaponType type, WorldSpace& ws)
 	switch(type)
 	{
 		case WEAPON_BASIC: weapon = new WeaponBasic(ws); break;
+		case WEAPON_SPREAD: weapon = new WeaponSpread <WeaponBasic> (ws, 3); break;
 	}
 
 	return weapon;

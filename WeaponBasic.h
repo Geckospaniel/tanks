@@ -10,6 +10,8 @@ class WeaponBasic : public Weapon
 public:
 	WeaponBasic(WorldSpace& ws);
 
+	bool doesDamage();
+
 	void update(Level& level, const Vector2& tankPosition, const float& tankRotation);
 	void draw();
 

@@ -13,6 +13,12 @@ WeaponBasic::WeaponBasic(WorldSpace& ws) : Weapon(ws)
 	length = 0.0f;
 
 	maxRange = 0.0f;
+	destructive = false;
+}
+
+bool WeaponBasic::doesDamage()
+{
+	return false;
 }
 
 void WeaponBasic::update(Level& level, const Vector2& tankPosition, const float& tankRotation)
@@ -42,7 +48,7 @@ void WeaponBasic::update(Level& level, const Vector2& tankPosition, const float&
 		};
 
 		length+=0.001f;
-		if(0 && length >= maxRange)
+		if(length >= maxRange)
 		{
 			length = 0.0f;
 			fired = false;
@@ -82,7 +88,8 @@ void WeaponBasic::update(Level& level, const Vector2& tankPosition, const float&
 
 			bulletPosition = last;
 
-			level(x, y) = 0;
+			if(destructive)
+				level(x, y) = 0;
 		}
 	}
 }

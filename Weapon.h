@@ -12,18 +12,17 @@ class Weapon
 public:
 	Weapon(WorldSpace& ws);
 
-	void addImmune(size_t id);
 	void drawPath(Level& level, Vector2& position, float tankRotation);
 
 	bool isFired();
+	virtual bool doesDamage()=0;
 
 	virtual void update(Level& level, const Vector2& tankPosition, const float& tankRotation)=0;
 	virtual void draw()=0;
 
 protected:
-	std::vector <size_t> immuneTanks;
-
 	float maxRange;
+	bool destructive;
 	bool fired;
 
 	WorldSpace& ws;
@@ -31,7 +30,8 @@ protected:
 
 enum WeaponType
 {
-	WEAPON_BASIC
+	WEAPON_BASIC,
+	WEAPON_SPREAD
 };
 
 Weapon* makeWeapon(WeaponType type, WorldSpace& ws);

@@ -24,7 +24,6 @@ private:
 	Vector2 radius;
 
 	size_t id;
-
 	Weapon* weapon;
 };
 
