@@ -18,7 +18,7 @@ Tank::Tank(WorldSpace& ws, Vector2 pos, Vector2 sz, size_t id) : ws(ws)
 	this->id = id;
 	rotation = 0.0f;
 
-	weapon = makeWeapon(WEAPON_BASIC, ws);
+	weapon = makeWeapon(WEAPON_SPREAD, ws);
 	SDL_Log("TNK : %p", &position);
 }
 
@@ -36,7 +36,7 @@ void Tank::update(Level& level)
 	float tRot = toRadian(rotation);
 	Vector2 direction(cos(tRot), sin(tRot));
 
-	//position+=(direction * 0.001f);
+	position+=(direction * 0.001f);
 
 	if(level.intersects(position))
 	{

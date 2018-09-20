@@ -9,10 +9,10 @@ WeaponBasic::WeaponBasic(WorldSpace& ws) : Weapon(ws)
 {
 	SDL_Log("Created basic weapon!");
 
-	speed = 0.01f;
+	speed = 0.015f;
 	length = 0.0f;
 
-	maxRange = 0.0f;
+	maxRange = 0.8f;
 	destructive = false;
 }
 
@@ -48,7 +48,7 @@ void WeaponBasic::update(Level& level, const Vector2& tankPosition, const float&
 		};
 
 		length+=0.001f;
-		if(length >= maxRange)
+		if(0 && length >= maxRange)
 		{
 			length = 0.0f;
 			fired = false;

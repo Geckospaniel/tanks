@@ -1,26 +1,29 @@
 #include "WeaponSpread.h"
 #include "Renderer.h"
 
-template <typename WeaponClass>
-WeaponSpread<WeaponClass>::WeaponSpread(WorldSpace& ws, size_t directions) : Weapon(ws)
+WeaponSpread::WeaponSpread(WorldSpace& ws, size_t directions) : Weapon(ws)
 {
 	this->directions = directions;
 	weapons.resize(directions);
+
+	type = WEAPON_BASIC;
+
+	for(size_t i = 0; i < directions; i++)
+		weapons[i] = makeWeapon(WEAPON_BASIC, ws);
 }
 
-template <typename WeaponClass>
-bool WeaponSpread<WeaponClass>::doesDamage()
+bool WeaponSpread::doesDamage()
 {
 	return false;
 }
 
-template <typename WeaponClass>
-void WeaponSpread<WeaponClass>::update(Level& level, const Vector2& tankPosition, const float& tankRotation)
+void WeaponSpread::update(Level& level, const Vector2& tankPosition, const float& tankRotation)
 {
+	for(size_t i = 0; i < weapons.size(); i++)
+		weapons[i]->update(level, tankPosition, tankRotation);
 }
 
-template <typename WeaponClass>
-void WeaponSpread<WeaponClass>::draw()
+void WeaponSpread::draw()
 {
 	for(size_t i = 0; i < weapons.size(); i++)
 		weapons[i]->draw();

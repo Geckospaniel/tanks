@@ -93,7 +93,7 @@ Weapon* makeWeapon(WeaponType type, WorldSpace& ws)
 	switch(type)
 	{
 		case WEAPON_BASIC: weapon = new WeaponBasic(ws); break;
-		case WEAPON_SPREAD: weapon = new WeaponSpread <WeaponBasic> (ws, 3); break;
+		case WEAPON_SPREAD: weapon = new WeaponSpread(ws, 3); break;
 	}
 
 	return weapon;

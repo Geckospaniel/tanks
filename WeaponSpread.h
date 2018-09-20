@@ -7,7 +7,6 @@
 
 #include <vector>
 
-template <typename WeaponClass>
 class WeaponSpread : public Weapon
 {
 public:
@@ -19,7 +18,8 @@ public:
 
 private:
 	std::vector <Weapon*> weapons;
-
+	
+	WeaponType type;
 	size_t directions;
 };
 
