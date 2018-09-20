@@ -29,14 +29,14 @@ void Tank::update(Level& level)
 
 	static std::uniform_int_distribution <int> dis(-10, 10);
 
-	rotation+=dis(gen);
+	//rotation+=dis(gen);
 
 	Vector2 last = position;
 
 	float tRot = toRadian(rotation);
 	Vector2 direction(cos(tRot), sin(tRot));
 
-	position+=(direction * 0.001f);
+	//position+=(direction * 0.001f);
 
 	if(level.intersects(position))
 	{
