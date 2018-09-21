@@ -50,5 +50,6 @@ void TankHandler::draw(Level& level)
 	{
 		tanks[i].draw();
 		tanks[i].drawWeapon(level);
+		tanks[i].drawHealth();
 	}
 }

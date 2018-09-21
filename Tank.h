@@ -13,12 +13,14 @@ public:
 
 	void update(Level& level);
 	void drawWeapon(Level& level);
+	void drawHealth();
 	void draw();
 
 private:
 	WorldSpace& ws;
 
 	float rotation;
+	float health;
 
 	Vector2 position;
 	Vector2 radius;

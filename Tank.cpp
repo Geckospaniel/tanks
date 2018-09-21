@@ -18,6 +18,8 @@ Tank::Tank(WorldSpace& ws, Vector2 pos, Vector2 sz, size_t id) : ws(ws)
 	this->id = id;
 	rotation = 0.0f;
 
+	health = 100.0f;
+
 	weapon = makeWeapon(WEAPON_SPREAD, ws);
 	SDL_Log("TNK : %p", &position);
 }
@@ -29,7 +31,10 @@ void Tank::update(Level& level)
 
 	static std::uniform_int_distribution <int> dis(-10, 10);
 
-	//rotation+=dis(gen);
+	rotation+=dis(gen);
+
+	if(health > 0)
+		health-=0.25f;
 
 	Vector2 last = position;
 
@@ -43,13 +48,29 @@ void Tank::update(Level& level)
 		position = last;
 	}
 
-	weapon->update(level, position, rotation);
+	Vector2 cannonEnd = position + (direction * radius[H]);
+	weapon->update(level, cannonEnd, rotation);
 }
 
 void Tank::drawWeapon(Level& level)
 {
 	weapon->draw();
 	weapon->drawPath(level, position, rotation);
+}
+
+void Tank::drawHealth()
+{
+	Vector2 barPosition = position - (radius * 2);
+	Vector2 barSize(radius[Y] * 2, radius[X]);
+
+	float per = barSize[X] / 100;
+	Vector2 greenSize(barSize[W] - (per * (100 - health)), barSize[H]);
+
+	Render::setColor(255, 0, 0);
+	Render::rect( ws.rectToScreen(barPosition, barSize) );
+	
+	Render::setColor(0, 255, 0);
+	Render::rect( ws.rectToScreen(barPosition, greenSize) );
 }
 
 void Tank::draw()
