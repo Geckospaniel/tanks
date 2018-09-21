@@ -33,8 +33,8 @@ Tank::Tank(WorldSpace& ws, Vector2 pos, Vector2 sz, size_t id) : ws(ws)
 
 	#define K(i) keys[preset[id][i]]
 
-	K(0).effect = -2.5f;
-	K(1).effect = +2.5f;
+	K(0).effect = -3.5f;
+	K(1).effect = +3.5f;
 
 	K(2).effect = +0.003f;
 	K(3).effect = -0.003f;

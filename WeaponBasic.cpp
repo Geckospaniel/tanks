@@ -12,8 +12,8 @@ WeaponBasic::WeaponBasic(WorldSpace& ws) : Weapon(ws)
 	speed = 0.005f;
 	length = 0.0f;
 
-	maxRange = 0.8f;
-	destructive = true;
+	maxRange = 1.4f;
+	destructive = false;
 }
 
 bool WeaponBasic::doesDamage()

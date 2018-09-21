@@ -16,7 +16,7 @@ Level::Level(WorldSpace& ws, Vector2 pos, Vector2 sz, const size_t tx, const siz
 	std::uniform_int_distribution <size_t> randX(0, tilesX - 1);
 	std::uniform_int_distribution <size_t> randY(0, tilesY - 1);
 
-	for(int i = 0; i < 0; i++)
+	for(int i = 0; i < 100; i++)
 	{
 		size_t x = randX(gen);
 		size_t y = randY(gen);
