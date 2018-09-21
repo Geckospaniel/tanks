@@ -15,6 +15,7 @@ public:
 	void drawPath(Level& level, Vector2& position, float tankRotation);
 
 	bool isFired();
+	virtual void fire();
 	virtual bool doesDamage()=0;
 
 	virtual void update(Level& level, const Vector2& tankPosition, const float& tankRotation)=0;

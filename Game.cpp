@@ -13,6 +13,8 @@ Game::Game(Window& win) :
 
 void Game::input(SDL_Event evnt)
 {
+	tankHandler.input(evnt);
+
 	if(evnt.type == SDL_KEYDOWN)
 	{
 		switch(evnt.key.keysym.sym)

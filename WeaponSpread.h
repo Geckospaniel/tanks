@@ -14,6 +14,7 @@ public:
 
 	bool doesDamage();
 	void update(Level& level, const Vector2& tankPosition, const float& tankRotation);
+	void fire();
 	void draw();
 
 private:

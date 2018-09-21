@@ -39,6 +39,12 @@ void WeaponSpread::update(Level& level, const Vector2& tankPosition, const float
 	}
 }
 
+void WeaponSpread::fire()
+{
+	for(size_t i = 0; i < weapons.size(); i++)
+		weapons[i]->fire();
+}
+
 void WeaponSpread::draw()
 {
 	for(size_t i = 0; i < weapons.size(); i++)

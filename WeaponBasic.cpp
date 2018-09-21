@@ -23,11 +23,18 @@ bool WeaponBasic::doesDamage()
 
 void WeaponBasic::update(Level& level, const Vector2& tankPosition, const float& tankRotation)
 {
-	if(!fired)
+	SDL_Log("Fired : %d", fired);
+
+	auto reset = [&]()
 	{
-		fired = true;
 		bulletPosition = tankPosition;
 		rotation = tankRotation;
+	};
+
+	if(!fired)
+	{
+		reset();
+		return;
 	}
 
 	auto getDirection = [&](float rot) -> Vector2
@@ -52,6 +59,8 @@ void WeaponBasic::update(Level& level, const Vector2& tankPosition, const float&
 		{
 			length = 0.0f;
 			fired = false;
+
+			reset();
 
 			return;
 		}
@@ -96,6 +105,9 @@ void WeaponBasic::update(Level& level, const Vector2& tankPosition, const float&
 
 void WeaponBasic::draw()
 {	
+	if(!fired)
+		return;
+
 	Render::setColor(255, 255, 255);
 	Vector2 p = ws.toScreen(bulletPosition);
 	Render::dot(p[X], p[Y]);

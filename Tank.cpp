@@ -9,6 +9,14 @@ float toRadian(float degrees)
 	return degrees * 0.0174532925;
 }
 
+constexpr int preset[4][5]
+{
+	{ SDLK_LEFT, SDLK_RIGHT, SDLK_UP, SDLK_DOWN, SDLK_RCTRL },
+	{  },
+	{  },
+	{  }
+};
+
 Tank::Tank(WorldSpace& ws, Vector2 pos, Vector2 sz, size_t id) : ws(ws)
 {
 	position = pos;
@@ -22,34 +30,66 @@ Tank::Tank(WorldSpace& ws, Vector2 pos, Vector2 sz, size_t id) : ws(ws)
 
 	weapon = makeWeapon(WEAPON_SPREAD, ws);
 	SDL_Log("TNK : %p", &position);
+
+	#define K(i) keys[preset[id][i]]
+
+	K(0).effect = -2.5f;
+	K(1).effect = +2.5f;
+
+	K(2).effect = +0.003f;
+	K(3).effect = -0.003f;
+
+	K(4).effect;
 }
 
 void Tank::update(Level& level)
 {
-	static std::random_device rd;
-	static std::mt19937 gen(rd());
+	float tRot = toRadian(rotation);
+	Vector2 direction(cos(tRot), sin(tRot));
 
-	static std::uniform_int_distribution <int> dis(-10, 10);
+	for(const auto& it : keys)
+	{
+		if(it.second.pressed)
+		{
+			if(it.first == preset[id][0] || it.first == preset[id][1])
+				rotation+=it.second.effect;
 
-	rotation+=dis(gen);
+			else if(it.first == preset[id][2] || it.first == preset[id][3])
+			{
+				Vector2 last = position;
+				position+=(direction * it.second.effect);
+
+				if(level.intersects(position))
+					position = last;
+			}
+			
+			else if(it.first == preset[id][4])
+				weapon->fire();
+		}
+	}
 
 	if(health > 0)
 		health-=0.25f;
 
-	Vector2 last = position;
-
-	float tRot = toRadian(rotation);
-	Vector2 direction(cos(tRot), sin(tRot));
-
-	//position+=(direction * 0.001f);
-
-	if(level.intersects(position))
-	{
-		position = last;
-	}
-
 	Vector2 cannonEnd = position + (direction * radius[H]);
 	weapon->update(level, cannonEnd, rotation);
+}
+
+void Tank::input(SDL_Event evnt)
+{
+	bool pressed;
+
+	switch(evnt.type)
+	{
+		case SDL_KEYDOWN: pressed = true; break;
+		case SDL_KEYUP: pressed = false; break;
+
+		default: return;
+	}
+
+	int keyID = evnt.key.keysym.sym;
+	if(keys.find(keyID) != keys.end())
+		keys[keyID].pressed = pressed;
 }
 
 void Tank::drawWeapon(Level& level)

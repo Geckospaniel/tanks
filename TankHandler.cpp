@@ -38,6 +38,12 @@ void TankHandler::add(size_t amount, Level& level, WorldSpace& ws)
 	}
 }
 
+void TankHandler::input(SDL_Event evnt)
+{
+	for(size_t i = 0; i < tanks.size(); i++)
+		tanks[i].input(evnt);
+}
+
 void TankHandler::update(Level& level)
 {
 	for(size_t i = 0; i < tanks.size(); i++)

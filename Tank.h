@@ -6,12 +6,18 @@
 #include "WorldSpace.h"
 #include "Weapon.h"
 
+#include <SDL2/SDL_events.h>
+
+#include <map>
+
 class Tank
 {
 public:
 	Tank(WorldSpace& ws, Vector2 pos, Vector2 sz, size_t id);
 
 	void update(Level& level);
+	void input(SDL_Event evnt);
+
 	void drawWeapon(Level& level);
 	void drawHealth();
 	void draw();
@@ -27,6 +33,9 @@ private:
 
 	size_t id;
 	Weapon* weapon;
+
+	struct Key { bool pressed; float effect; };
+	std::map <int, Key> keys;
 };
 
 #endif

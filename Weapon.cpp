@@ -7,6 +7,7 @@ extern float toRadian(float degrees);
 
 Weapon::Weapon(WorldSpace& ws) : ws(ws) 
 {
+	fired = false;
 }
 
 void Weapon::drawPath(Level& level, Vector2& position, float tankRotation)
@@ -81,6 +82,12 @@ void Weapon::drawPath(Level& level, Vector2& position, float tankRotation)
 bool Weapon::isFired()
 {
 	return fired;
+}
+
+void Weapon::fire()
+{
+	if(!fired)
+		fired = true;
 }
 
 Weapon* makeWeapon(WeaponType type, WorldSpace& ws)
